@@ -11,7 +11,8 @@ https://developers.google.com/android/reference/com/google/android/gms/auth/api/
 
 Method #2: Prompt user to signOn OAuth2 instead of using API_KEY
 
-<img width="200" src="https://user-images.githubusercontent.com/1282659/48357659-bc951000-e65e-11e8-9713-f5b60a76b7c8.jpg"><img src="https://user-images.githubusercontent.com/1282659/48357670-c3238780-e65e-11e8-8d1b-446495312790.png">
+<img width="200" src="https://user-images.githubusercontent.com/1282659/48357659-bc951000-e65e-11e8-9713-f5b60a76b7c8.jpg"><img width="1150" src="https://user-images.githubusercontent.com/1282659/48364463-19e48d80-e66e-11e8-9624-df6f6a3257f8.png">
+
 
 
 Method#3: 'new' documentation which requires metadata + app_id defined in manifest file.
