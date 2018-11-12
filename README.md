@@ -5,7 +5,8 @@
 2 methods in MainActivity from below documentation + quickstart + demo code on Github
 https://developers.google.com/drive/android/auth#connecting_and_authorizing_with_the_google_apis_java_client
 
-Method #1: Silent login 
+Method #1: Silent login (if ID token available)
+https://developers.google.com/android/reference/com/google/android/gms/auth/api/signin/GoogleSignInClient#getGoogleSignInAccountFromIntent(android.content.Intent)
 <img width="1220" alt="silent failed" src="https://user-images.githubusercontent.com/1282659/48357677-c6b70e80-e65e-11e8-98eb-9cbb3f81989d.png">
 
 Method #2: Prompt user to signOn OAuth2 instead of using API_KEY
