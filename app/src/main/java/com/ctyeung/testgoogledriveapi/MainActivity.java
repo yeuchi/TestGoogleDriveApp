@@ -71,18 +71,18 @@ public class MainActivity extends AppCompatActivity {
 
         mGoogleSignInClient = buildGoogleSignInClient();
 
-        signIn();
+        //signIn();
 
         /*
          * https://developers.google.com/drive/android/java-client#set_mime_types_in_the_app_manifest
          *  new method
          */
 
-        /*
+
         Intent intent = new Intent(mContext, DriveOpen.class);
         intent.setAction("com.google.android.apps.drive.DRIVE_OPEN");
         startActivity(intent);
-        */
+
     }
 
     @Override
@@ -278,8 +278,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
-        super.onActivityResult(requestCode, resultCode, data);
-
     }
 
     /**

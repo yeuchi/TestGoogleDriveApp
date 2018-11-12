@@ -1,5 +1,7 @@
 package com.ctyeung.testgoogledriveapi;
 
+import android.accounts.AccountManager;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,13 +10,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.drive.Drive;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
+import com.google.api.services.drive.Drive;
 import com.google.android.gms.drive.DriveClient;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.DriveResourceClient;
@@ -23,7 +27,22 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.services.drive.DriveScopes;
+import com.google.api.client.googleapis.services.AbstractGoogleClient.Builder;
+import com.google.api.services.drive.model.File;
+import com.google.api.services.drive.model.FileList;
 
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+
+/*
+ * example code from nobuoka
+ *
+ * https://github.com/nobuoka/android-GoogleDriveSample/blob/master/GoogleDriveSample/src/main/java/info/vividcode/android/app/googledrivesample/MainActivity.java
+ */
 public class DriveOpen extends AppCompatActivity {
 
     /** DRIVE_OPEN Intent action. */
@@ -33,6 +52,14 @@ public class DriveOpen extends AppCompatActivity {
 
     /** Drive file ID. */
     private String mFileId;
+
+    protected static final int REQUEST_CODE_SIGN_IN = 0;
+
+    static final int REQUEST_ACCOUNT_PICKER = 1;
+    static final int REQUEST_AUTHORIZATION = 2;
+
+    private Drive mService = null;
+    private GoogleAccountCredential credential = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,78 +73,59 @@ public class DriveOpen extends AppCompatActivity {
         final Intent intent = getIntent();
         final String action = intent.getAction();
 
-        // Make sure the Action is DRIVE_OPEN.
-        if (ACTION_DRIVE_OPEN.equals(action)) {
-            // Get the Drive file ID.
-            mFileId = intent.getStringExtra(EXTRA_FILE_ID);
-            getUserAccountAndProcessFile();
-        } else {
-            // Unknown action.
-            finish();
-        }
+        Collection<String> list = new ArrayList<String>();
+        list.add(DriveScopes.DRIVE);
 
-        //TestDriveQuery();
-
+        credential = GoogleAccountCredential.usingOAuth2(this, list);
+        credential.setSelectedAccountName("yeuchi@gmail.com");
+        startActivityForResult(credential.newChooseAccountIntent(), REQUEST_ACCOUNT_PICKER);
     }
 
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        switch (requestCode) {
+            case REQUEST_ACCOUNT_PICKER:
+                if (resultCode == RESULT_OK && data != null && data.getExtras() != null) {
+                    String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+                    if (accountName != null) {
+                        credential.setSelectedAccountName(accountName);
+                        mService = new Drive.Builder(AndroidHttp.newCompatibleTransport(), new GsonFactory(), credential).build();
+                        loadTextFromDrive();
+                    }
+                }
+                break;
+            case REQUEST_AUTHORIZATION:
+                if (resultCode == Activity.RESULT_OK) {
+                    //saveTextToDrive();
+                    loadTextFromDrive();
 
-
-    /**
-     * Prompt the user to choose the account to use and process the file using the
-     * Drive file ID stored in mFileId.
-     */
-    private void getUserAccountAndProcessFile() {
-        // Implement the method.
-/*
-        GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(this, DriveScopes.DRIVE);
-        credential.setSelectedAccountName(accountName);
-        Drive service = new Drive.Builder(AndroidHttp.newCompatibleTransport(), new GsonFactory(), credential).build();
-*/
-        throw new UnsupportedOperationException(
-                "The getUserAccountAndProcessFile method has not been implemented");
-    }
-    /*
-        private void TestDriveQuery()
-        {
-            URL url = NetworkUtils.buildDriveQueryUrl();
-            GithubQueryTask task = new GithubQueryTask();
-            task.execute(url);
+                } else {
+                    startActivityForResult(credential.newChooseAccountIntent(), REQUEST_ACCOUNT_PICKER);
+                }
+                break;
         }
+    }
 
-        public class GithubQueryTask extends AsyncTask<URL, Void, String>
-        {
-            public GithubQueryTask()
-            {
-
-            }
-
+    protected void loadTextFromDrive()
+    {
+        Thread t = new Thread(new Runnable() {
             @Override
-            protected String doInBackground(URL... urls) {
-                URL searchUrl = urls[0];
-                String githubSearchResults = null;
-                try
-                {
-                    githubSearchResults = NetworkUtils.getResponseFromHttpUrl(searchUrl);
+            public void run() {
+                try {
+                    FileList list = mService.files().list().execute();
+                    for (File f : list.getFiles()) {
+                        String name = f.getName();
+                        String id = f.getId();
+
+                    }
+                } catch (UserRecoverableAuthIOException e) {
+                    startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                catch (IOException ex)
-                {
-                    ex.printStackTrace();
-                }
-                return githubSearchResults;
             }
-
-            protected void onPreExecute()
-            {
-                super.onPreExecute();
-            }
-
-            protected void onPostExecute(String str)
-            {
-            }
-        }
-    */
-
-
-
+        });
+        t.start();
+    }
 
 }
