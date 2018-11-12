@@ -123,6 +123,10 @@ public class MainActivity extends AppCompatActivity {
             // There's immediate result available.
             GoogleSignInAccount signInAccount = task.getResult();
             //updateViewWithAccount(account);
+
+            Toast.makeText(mActvity,
+                    "signIn task.isSuccessful: ",
+                    Toast.LENGTH_LONG).show();
         }
         else
             {
