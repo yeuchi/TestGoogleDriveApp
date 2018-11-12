@@ -204,8 +204,8 @@ public class MainActivity extends AppCompatActivity {
 
         GoogleSignInOptions signInOptions =
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestScopes(Drive.SCOPE_FILE)
-                        .requestScopes(Drive.SCOPE_APPFOLDER)
+                        //.requestScopes(Drive.SCOPE_FILE)
+                       // .requestScopes(Drive.SCOPE_APPFOLDER)
                         .build();
 
         GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, signInOptions);
