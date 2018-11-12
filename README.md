@@ -25,8 +25,8 @@ Attempted to build local API library but failed on last step.
 http://www.ctyeung.com/Udacity/capstone/buildLibrary.png
 
 Successful setting up Google Drive API service, below API Explorer demonstrate a GET request of files OK.
-http://ctyeung.com/Udacity/capstone/ExplorerOK.png
+<img width="1412" alt="explorerok" src="https://user-images.githubusercontent.com/1282659/48358469-73de5680-e660-11e8-9d4f-5f2ca4cde44d.png">
 
 Successful setup of API key as work around from failed OAuth2 (above method #2).
 However, this does not work.
-http://ctyeung.com/Udacity/capstone/api_key.png
+<img width="661" alt="api_key" src="https://user-images.githubusercontent.com/1282659/48358495-848ecc80-e660-11e8-98b9-a1ab66653412.png">
