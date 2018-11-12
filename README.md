@@ -15,7 +15,7 @@ Method #2: Prompt user to signOn OAuth2 instead of using API_KEY
 
 
 
-Method#3: 'new' documentation which requires metadata + app_id defined in manifest file.
+Method#3: Google APIS Client
 https://developers.google.com/drive/android/java-client#set_mime_types_in_the_app_manifest
 
 Problem below ... action is NOT DRIVE_OPEN (specified in manifest)
