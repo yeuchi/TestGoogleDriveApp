@@ -1,5 +1,10 @@
 # TestGoogleDriveApp
-learn to access google drive api
+- learn to access google drive api.
+- 3 attempts below
+
+2 methods in MainActivity from below documentation + quickstart + demo code on Github
+https://developers.google.com/drive/android/auth#connecting_and_authorizing_with_the_google_apis_java_client
+
 
 Attempt to understand tutorial below.
 
