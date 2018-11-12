@@ -8,7 +8,7 @@ https://developers.google.com/drive/android/auth#connecting_and_authorizing_with
 Method #1: Silent login 
 <img width="1220" alt="silent failed" src="https://user-images.githubusercontent.com/1282659/48357677-c6b70e80-e65e-11e8-98eb-9cbb3f81989d.png">
 
-Method #2: Prompt user to signOn
+Method #2: Prompt user to signOn (OAuth2)
 
 <img width="200" src="https://user-images.githubusercontent.com/1282659/48357659-bc951000-e65e-11e8-9713-f5b60a76b7c8.jpg"><img src="https://user-images.githubusercontent.com/1282659/48357670-c3238780-e65e-11e8-8d1b-446495312790.png">
 
