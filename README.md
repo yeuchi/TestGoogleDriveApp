@@ -15,14 +15,10 @@ Method #2: Prompt user to signOn OAuth2 instead of using API_KEY
 
 
 
-Method#3: Google APIS Client
-https://developers.google.com/drive/android/java-client#set_mime_types_in_the_app_manifest
-
-Problem below ... action is NOT DRIVE_OPEN (specified in manifest)
-<img width="990" alt="screen shot 2018-11-12 at 8 59 45 am" src="https://user-images.githubusercontent.com/1282659/48355611-07f8ef80-e65a-11e8-9568-be84ee41a09f.png">
-
-Attempted to build local API library but failed on last step.
-http://www.ctyeung.com/Udacity/capstone/buildLibrary.png
+Method#3: Example code from Nobuoka
+https://github.com/nobuoka/android-GoogleDriveSample/blob/master/GoogleDriveSample/src/main/java/info/vividcode/android/app/googledrivesample/MainActivity.java
+Create service object ok and seeing authentication error.  Probably a configuration issue in my service ?
+ <img width="987" alt="screen shot 2018-11-12 at 2 18 01 pm" src="https://user-images.githubusercontent.com/1282659/48374048-3fcb5b80-e689-11e8-8ab7-65328bb6b317.png">
 
 Successful setting up Google Drive API service, below API Explorer demonstrate a GET request of files OK.
 <img width="1412" alt="explorerok" src="https://user-images.githubusercontent.com/1282659/48358469-73de5680-e660-11e8-9d4f-5f2ca4cde44d.png">
