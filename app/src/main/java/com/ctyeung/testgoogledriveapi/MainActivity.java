@@ -45,6 +45,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+/*
+ * https://developers.google.com/drive/android/java-client#set_mime_types_in_the_app_manifest
+*/
 public class MainActivity extends AppCompatActivity {
 
 
