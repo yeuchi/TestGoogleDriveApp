@@ -6,8 +6,7 @@
 https://developers.google.com/drive/android/auth#connecting_and_authorizing_with_the_google_apis_java_client
 
 
-Attempt to understand tutorial below.
-
+A 3rd 'new' method attempt below.
 https://developers.google.com/drive/android/java-client#set_mime_types_in_the_app_manifest
 
 Please ping me if you want my app_id to test with.
