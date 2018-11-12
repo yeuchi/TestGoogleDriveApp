@@ -124,6 +124,11 @@ public class MainActivity extends AppCompatActivity {
             GoogleSignInAccount signInAccount = task.getResult();
             //updateViewWithAccount(account);
 
+            mDriveClient = Drive.getDriveClient(getApplicationContext(), signInAccount);
+            // Build a drive resource client.
+            mDriveResourceClient =
+                    Drive.getDriveResourceClient(getApplicationContext(), signInAccount);
+
             Toast.makeText(mActvity,
                     "signIn task.isSuccessful: ",
                     Toast.LENGTH_LONG).show();
@@ -147,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
                                 "signIn Success: " +msg,
                                 Toast.LENGTH_LONG).show();
 
-                        //updateViewWithAccount(account);
                     } catch (Exception ex)
                     {
                         String errMsg = ex.toString();
@@ -167,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-
     }
 
     /**
@@ -204,21 +207,23 @@ public class MainActivity extends AppCompatActivity {
 
         GoogleSignInOptions signInOptions =
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        //.requestScopes(Drive.SCOPE_FILE)
-                       // .requestScopes(Drive.SCOPE_APPFOLDER)
+                        .requestScopes(Drive.SCOPE_FILE)
+                        .requestScopes(Drive.SCOPE_APPFOLDER)
                         .build();
 
         GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, signInOptions);
-        startActivityForResult(googleSignInClient.getSignInIntent(), 0);
+        Intent intent = googleSignInClient.getSignInIntent();
+        startActivityForResult(intent, REQUEST_CODE_SIGN_IN);
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Bundle bundle = data.getExtras();
 
         switch (requestCode) {
+
             case REQUEST_CODE_SIGN_IN:
                 if (resultCode != RESULT_OK) {
                     // Sign-in may fail or be cancelled by the user. For this sample, sign-in is
@@ -233,24 +238,25 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                     return;
                 }
+                else {
+                    Task<GoogleSignInAccount> getAccountTask =
+                            GoogleSignIn.getSignedInAccountFromIntent(data);
 
-                Task<GoogleSignInAccount> getAccountTask =
-                        GoogleSignIn.getSignedInAccountFromIntent(data);
+                    if (getAccountTask.isSuccessful()) {
+                        initializeDriveClient(getAccountTask.getResult());
 
-                if (getAccountTask.isSuccessful()) {
-                    initializeDriveClient(getAccountTask.getResult());
+                        Toast.makeText(mActvity,
+                                "signIn2 -> getSignedInAccountFromIntent Success ",
+                                Toast.LENGTH_LONG).show();
 
-                    Toast.makeText(mActvity,
-                            "signIn2 -> getSignedInAccountFromIntent Success ",
-                            Toast.LENGTH_LONG).show();
+                    } else {
+                        //Log.e(TAG, "Sign-in failed.");
 
-                } else {
-                    //Log.e(TAG, "Sign-in failed.");
-
-                    Toast.makeText(mActvity,
-                            "signIn2 -> getSignedInAccountFromIntent Failed ",
-                            Toast.LENGTH_LONG).show();
-                    finish();
+                        Toast.makeText(mActvity,
+                                "signIn2 -> getSignedInAccountFromIntent Failed ",
+                                Toast.LENGTH_LONG).show();
+                        finish();
+                    }
                 }
                 break;
             case REQUEST_CODE_OPEN_ITEM:
