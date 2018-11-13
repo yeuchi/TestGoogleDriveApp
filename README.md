@@ -25,3 +25,7 @@ Successful setting up Google Drive API service, below API Explorer demonstrate a
 
 Successful setup of API key as work around from failed OAuth2 (above method #2).
 <img width="661" alt="api_key" src="https://user-images.githubusercontent.com/1282659/48358495-848ecc80-e660-11e8-98b9-a1ab66653412.png">
+
+drive.files.list executed 4 minutes ago time to execute: 1435 ms
+GET https://www.googleapis.com/drive/v3/files?key={YOUR_API_KEY} // having replaced with my actual key
+<img width="668" alt="screen shot 2018-11-13 at 9 33 06 am" src="https://user-images.githubusercontent.com/1282659/48424042-68a22e00-e727-11e8-9423-8af01e93ffa7.png">
